@@ -5,6 +5,8 @@ const deleteAccount = require('./routes/deleteaccount-route.js');
  posts = require('./routes/explore/explore-posts-route.js');
  postLikes = require('./routes/explore/post-likes-route.js');
  conversation = require('./routes/conversation-route.js');
+ comment = require('./routes/explore/post-comments.js');
+
 
 
 const AppRoutes = app =>{
@@ -16,6 +18,7 @@ const AppRoutes = app =>{
     app.use('/',posts);
     app.use('/',postLikes);
     app.use('/',conversation);
+    app.use('/',comment);
 }
 
 module.exports = AppRoutes;
