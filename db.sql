@@ -36,3 +36,13 @@ BEGIN
    where id= userId;
 END$$
 DELIMITER ;
+
+-- GetConversations procedure
+Drop procedure IF exists GetConversation;
+DELIMITER $$
+CREATE PROCEDURE `GetConversation` (userId int)
+BEGIN
+   select * from conversations
+   where user_one=userId or user_two=userId;
+END$$
+DELIMITER ;
