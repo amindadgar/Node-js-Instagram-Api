@@ -13,13 +13,13 @@ app.get('/conversation/:id',(req,res) =>{
         else {
             if(rows[0].length != 0){
                 const sendobject = {
-                    availableConversation: true,
+                    available: true,
                     data:rows[0]
                 };
                 res.send(sendobject);
             }else{
                 const sendobject = {
-                    availableConversation: false,
+                    available: false,
                     data:{}
                 };
                 res.send(sendobject);

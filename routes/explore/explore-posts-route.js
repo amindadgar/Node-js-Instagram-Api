@@ -11,7 +11,19 @@ app.get('/posts/:id',(req,res) =>{
     connection.query('select * from posts where post_id = ?',[req.params.id],(err, rows) =>{
         if(err) throw err;
         else {
-           res.send(rows[0]);
+            if(rows[0].length != 0){
+                const sendobject = {
+                    available: true,
+                    data:rows[0]
+                };
+                res.send(sendobject);
+            }else{
+                const sendobject = {
+                    available: false,
+                    data:{}
+                };
+                res.send(sendobject);
+            }
         }
     });
     
