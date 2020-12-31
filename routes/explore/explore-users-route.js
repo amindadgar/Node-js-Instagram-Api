@@ -28,7 +28,12 @@ app.get('/users/:id',(req,res) =>{
         });
 });
 app.get('/users',(req,res) =>{
-    connection.query('select * from users',(err,rows) =>{
+    connection.query('select username, \
+    firstname,surname,email, \
+    bio,account_type,instagram\
+    ,twitter,facebook,github,website,\
+    phone,isOnline,lastOnline  from users',(err,rows) =>{
+        
         if(err) throw err;
         else
             res.send(rows);

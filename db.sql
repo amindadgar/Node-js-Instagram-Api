@@ -32,7 +32,11 @@ DROP PROCEDURE IF EXISTS GetUser;
 DELIMITER $$
 CREATE PROCEDURE `GetUser` (userId int)
 BEGIN
-   Select * from users 
+   Select username, 
+    firstname,surname,email, 
+    bio,account_type,instagram
+    ,twitter,facebook,github,website,
+    phone,isOnline,lastOnline from users 
    where id= userId;
 END$$
 DELIMITER ;
