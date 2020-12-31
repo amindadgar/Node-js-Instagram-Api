@@ -17,7 +17,7 @@ app.post('/signup', express.json(), async (req, res) => {
         let emp = req.body;
         // encrypt the password
         const hashedPassword = await bcrypt.hash(emp.password, 10);
-        
+
         // the sql query needed for calling procedure
         const query = 'SET @UserName = ?; SET @firstname = ?; \
         SET @surname = ?; SET @email = ?; SET @password = ?; \
@@ -38,7 +38,7 @@ app.post('/signup', express.json(), async (req, res) => {
                 res.status(201).send();
             }
         });
-    } catch(err) {
+    } catch (err) {
         console.log(err);
         res.status(500).send();
     }
