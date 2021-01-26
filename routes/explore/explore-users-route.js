@@ -1,42 +1,42 @@
-const express = require('express');
-const connection = require('../../db-connection');
+const router = require('express').Router,
+ connection = require('../../db-connection'),
+ sendData = require('../../config/middlewares');
 
 
-const app = express();
 
 // example url:  /users/1
-app.get('/users/:id', (req, res) => {
+router.get('/users/:id', (req, res) => {
 
 
     connection.query('CALL GetUser(?);', [req.params.id], (err, rows) => {
-        if (err) throw err;
+        if (err) {
+            res.status(500);
+            res.send('server internal error');
+            throw err;
+        }
         else {
-            if (rows[0].length != 0) {
-                const sendobject = {
-                    available: true,
-                    data: rows[0]
-                };
-                res.send(sendobject);
-            } else {
-                const sendobject = {
-                    available: false,
-                    data: {}
-                };
-                res.send(sendobject);
-            }
+            sendData(rows, res);
         }
     });
 });
-app.get('/users', (req, res) => {
+
+// get a list of users
+router.get('/users', (req, res) => {
     connection.query('select username, \
     firstname,surname,email, \
     bio,account_type,instagram\
     ,twitter,facebook,github,website,\
     phone,isOnline,lastOnline  from users', (err, rows) => {
 
-        if (err) throw err;
-        else
+        if (err) {
+            res.status(500);
+            res.send('server internal error');
+            throw err;
+        }
+        else{
+            res.status(200);
             res.send(rows);
+        }
     });
 });
 

@@ -1,20 +1,23 @@
-const express = require('express');
-connection = require('../db-connection');
+const router = require('express').Router(),
+ connection = require('../db-connection');
 
-
-const app = express();
 
 
 // example url:  /users?id=1
-app.delete('/deleteaccount', (req, res) => {
+router.delete('/deleteaccount', (req, res) => {
     const id = req.query.id;
 
     connection.query('CALL DeleteUser(?);', id, (err, rows) => {
-        if (err) throw err;
+        if (err) {
+            res.status(500);
+            res.send('server internal error');
+            throw err;
+        }
         else {
+            res.status(201)
             res.send('Deleted Successfully!');
         }
     });
 });
 
-module.exports = app
+module.exports = router;

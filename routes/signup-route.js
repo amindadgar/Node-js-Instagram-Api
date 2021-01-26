@@ -1,18 +1,11 @@
-const express = require('express');
+const router = require('express').Router();
 connection = require('../db-connection');
 bcrypt = require('bcrypt');
 
 
-const app = express();
-app.use(express.json());
 
 
-app.get('/signup', (req, res) => {
-    res.send('SignUp Page');
-})
-
-
-app.post('/signup', express.json(), async (req, res) => {
+router.post('/signup', express.json(), async (req, res) => {
     try {
         let emp = req.body;
         // encrypt the password
@@ -31,11 +24,16 @@ app.post('/signup', express.json(), async (req, res) => {
             ?, ?,? ,?, \
             ?, ?, ?, ? );'
 
+        // all this below could be a procedure and just we send an object
+
         connection.query(newQuery, [emp.username, emp.firstname, emp.surname, emp.email, hashedPassword, emp.bio, emp.joined, emp.email_verified,
             emp.account_type, emp.instagram, emp.twitter, emp.facebook, emp.gitHub, emp.website, emp.phone, emp.isonline, emp.lastonline
         ], (err, rows) => {
-            if (err) throw err;
-            else {
+            if (err) {
+                res.status(500);
+                res.send('internal server error')
+                throw err;
+            } else {
                 res.status(201).send();
             }
         });
@@ -45,4 +43,4 @@ app.post('/signup', express.json(), async (req, res) => {
     }
 });
 
-module.exports = app
+module.exports = router

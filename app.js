@@ -4,6 +4,8 @@ require('dotenv').config();
 // initialize express framework
 const app = express();
 
+app.use(express.json());
+
 const AppRoutes = require('./app-routes.js');
 
 // listen on a special port, ex: 9000
